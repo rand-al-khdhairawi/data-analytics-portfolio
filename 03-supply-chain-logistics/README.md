@@ -7,7 +7,7 @@
 ## Dashboard
 ![Dashboard](images/dashboard.png)
 
-Live version: https://YOUR-USERNAME.github.io/data-analytics-portfolio/supply-chain/
+Live version: https://rand-al-khdhairawi.github.io/data-analytics-portfolio/supply-chain/
 
 ## How to run (Windows)
 1. Put `DataCoSupplyChainDataset.csv` in `data\` (see `data\README.md`).
