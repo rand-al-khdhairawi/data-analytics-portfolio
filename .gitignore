@@ -1,0 +1,14 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+# Databases and raw datasets are rebuilt from the download, never committed (GitHub rejects files over 100 MB)
+*.db
+**/data/*
+!**/data/README.md
+!**/data/.gitkeep
+# Editors and OS
+.vscode/
+.DS_Store
+Thumbs.db

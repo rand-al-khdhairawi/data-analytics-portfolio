@@ -1,0 +1,84 @@
+{
+ "orders": 62897,
+ "otd_pct": 42.68725058428859,
+ "avg_lead_time": 3.5015183554064584,
+ "delayed_value": 18082555.11,
+ "total_value": 31644664.75,
+ "mode": [
+  {
+   "shipping_mode": "First Class",
+   "orders": 9602,
+   "sched": 1,
+   "mean_actual": 2.0,
+   "sd_actual": 0.0,
+   "mean_delay": 1.0,
+   "sd_delay": 0.0,
+   "otd": 0.0
+  },
+  {
+   "shipping_mode": "Same Day",
+   "orders": 3407,
+   "sched": 0,
+   "mean_actual": 0.484,
+   "sd_actual": 0.5,
+   "mean_delay": 0.484,
+   "sd_delay": 0.5,
+   "otd": 0.516
+  },
+  {
+   "shipping_mode": "Second Class",
+   "orders": 12256,
+   "sched": 2,
+   "mean_actual": 4.003,
+   "sd_actual": 1.414,
+   "mean_delay": 2.003,
+   "sd_delay": 1.414,
+   "otd": 0.2
+  },
+  {
+   "shipping_mode": "Standard Class",
+   "orders": 37632,
+   "sched": 4,
+   "mean_actual": 3.995,
+   "sd_actual": 1.417,
+   "mean_delay": -0.005,
+   "sd_delay": 1.417,
+   "otd": 0.602
+  }
+ ],
+ "pareto_country": {
+  "units": 164,
+  "units_for_80pct_late": 26,
+  "share_of_units": 0.15853658536585366,
+  "their_share_of_all_orders": 0.8071768128845573
+ },
+ "pareto_city": {
+  "units": 3585,
+  "units_for_80pct_late": 1071,
+  "share_of_units": 0.298744769874477,
+  "their_share_of_all_orders": 0.7896879024436778
+ },
+ "excess_country": {
+  "countries_tested": 41,
+  "significant_bonferroni_05": 0,
+  "max_abs_excess_rate_pp": 5.4106637710205385,
+  "late_rate_min_pct": 51.96850393700787,
+  "late_rate_max_pct": 60.9271523178808
+ },
+ "excess_region": {
+  "regions_tested": 23,
+  "significant_bonferroni_05": 0
+ },
+ "r2": {
+  "mode": 0.2310245845848129,
+  "region": 0.0004875671180293306,
+  "country": 0.0029150285012188304
+ },
+ "rebaseline": {
+  "otd_before_pct": 42.68725058428859,
+  "otd_after_pct": 65.73604464441864,
+  "first_class_otd_after_pct": 100.0,
+  "second_class_otd_after_pct": 59.95430809399478,
+  "late_orders_removed": 14497
+ }
+}

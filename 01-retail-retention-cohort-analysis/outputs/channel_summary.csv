@@ -1,0 +1,4 @@
+channel,customers,avg_ltv,avg_orders,customers_90d_base,repeat_rate,aov
+Europe (ex-UK),453,5542.2123,6.7219,353,0.4788,824.51
+Rest of world,65,4141.3394,2.8923,55,0.2364,1431.85
+United Kingdom,5334,2678.8074,6.2544,3897,0.4337,428.31

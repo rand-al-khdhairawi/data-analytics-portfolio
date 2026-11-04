@@ -1,0 +1,65 @@
+// Project 3 - Power BI measures for the star schema built by 01_build_star.py.
+// NOT TESTED in Power BI Desktop (not available in this environment). Definitions mirror the SQL views in 02_kpis.sql,
+// which were run and checked. Compare the first card values to the SQL results before publishing.
+//
+// Model: Fact_Shipments (one row per order item) -> Dim_Date[date_key] (order_date_key), Dim_Route[route_key],
+//        Dim_ShippingMode[mode_key], Dim_Product[product_key], Dim_Customer[customer_key]. Relationships: many-to-one, single direction.
+// The dataset has no supplier field. Dim_ShippingMode (carrier service level) and Dim_Route (destination) stand in for supplier and lane.
+// is_late and is_canceled are constant within an order, so order-level KPIs count distinct orders.
+
+Delivered Orders =
+CALCULATE ( DISTINCTCOUNT ( Fact_Shipments[order_id] ), Fact_Shipments[is_canceled] = 0 )
+
+Late Orders =
+CALCULATE ( DISTINCTCOUNT ( Fact_Shipments[order_id] ), Fact_Shipments[is_canceled] = 0, Fact_Shipments[is_late] = 1 )
+
+OTD % =
+DIVIDE ( [Delivered Orders] - [Late Orders], [Delivered Orders] )
+
+Avg Lead Time (days) =
+AVERAGEX (
+    CALCULATETABLE ( VALUES ( Fact_Shipments[order_id] ), Fact_Shipments[is_canceled] = 0 ),
+    CALCULATE ( MIN ( Fact_Shipments[actual_days] ) )
+)
+
+Avg Scheduled Days =
+AVERAGEX (
+    CALCULATETABLE ( VALUES ( Fact_Shipments[order_id] ), Fact_Shipments[is_canceled] = 0 ),
+    CALCULATE ( MIN ( Fact_Shipments[scheduled_days] ) )
+)
+
+Avg Delay (days) = [Avg Lead Time (days)] - [Avg Scheduled Days]
+
+Delayed Order Value =
+CALCULATE ( SUM ( Fact_Shipments[order_item_total] ), Fact_Shipments[is_canceled] = 0, Fact_Shipments[is_late] = 1 )
+
+Total Order Value =
+CALCULATE ( SUM ( Fact_Shipments[order_item_total] ), Fact_Shipments[is_canceled] = 0 )
+
+Delayed Value % = DIVIDE ( [Delayed Order Value], [Total Order Value] )
+
+// Lead-time variance (standard deviation of actual days across orders). Use by Dim_ShippingMode or Dim_Route.
+Lead Time StdDev =
+STDEVX.S (
+    CALCULATETABLE ( VALUES ( Fact_Shipments[order_id] ), Fact_Shipments[is_canceled] = 0 ),
+    CALCULATE ( MIN ( Fact_Shipments[actual_days] ) )
+)
+
+// Variance by service level: how far this mode's StdDev is from the overall StdDev
+Lead Time StdDev vs Overall =
+[Lead Time StdDev] - CALCULATE ( [Lead Time StdDev], ALL ( Dim_ShippingMode ) )
+
+// ---- Pareto (use with Dim_Route[country] on the axis, sorted by Late Orders descending)
+Late Orders Rank =
+RANKX ( ALL ( Dim_Route[country] ), [Late Orders], , DESC, Dense )
+
+Cumulative Late Share =
+VAR _rank = [Late Orders Rank]
+VAR _cum =
+    SUMX (
+        FILTER ( ALL ( Dim_Route[country] ), [Late Orders Rank] <= _rank ),
+        [Late Orders]
+    )
+RETURN DIVIDE ( _cum, CALCULATE ( [Late Orders], ALL ( Dim_Route[country] ) ) )
+
+Within Top 80% = IF ( [Cumulative Late Share] <= 0.8 || [Late Orders Rank] = 1, 1, 0 )
