@@ -3,7 +3,7 @@
 Three business analytics projects on public datasets, each with SQL or Python code, a written result and a recommendation.
 By Rand Ayad. www.linkedin.com/in/randayad · rand.al-khdhairawi@gmx.de
 
-Interactive dashboards: https://rand-alkhdhairawi.github.io/data-analytics-portfolio/
+Interactive dashboards: https://rand-al-khdhairawi.github.io/data-analytics-portfolio/
 
 ## Projects
 
