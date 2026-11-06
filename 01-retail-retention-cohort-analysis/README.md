@@ -7,7 +7,7 @@
 ## Dashboard
 ![Dashboard](images/dashboard.png)
 
-Live version: https://YOUR-USERNAME.github.io/data-analytics-portfolio/retention/
+Live version: https://rand-al-khdhairawi.github.io/data-analytics-portfolio/retention/
 
 ![Cohort retention heatmap](images/retention_heatmap.png)
 
